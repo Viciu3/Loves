@@ -3,18 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Романтический конверт для тебя</title>
+    <title>Романтический конверт для ...</title>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="apple-touch-icon" sizes="180x180" href="img/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="img/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="img/favicons/favicon-16x16.png">
+    <link rel="manifest" href="img/favicons/site.webmanifest">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
     <style>
         body {
+            margin: 0;
             background: linear-gradient(to bottom, #ffe6f0, #ffb6c1);
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            margin: 0;
             font-family: 'Caveat', cursive;
             overflow: hidden;
+            perspective: 1000px;
         }
         .container {
             text-align: center;
@@ -39,33 +46,55 @@
             transform: translateX(-50%) rotateX(90deg);
             opacity: 0;
         }
-        .note {
-            display: none;
+        .card {
+            width: 100%;
+            max-width: 800px;
+            min-height: 420px;
+            padding: 15px 30px;
             position: absolute;
-            top: 50px;
+            top: 50%;
             left: 50%;
-            transform: translateX(-50%);
-            background: #fff;
-            padding: 20px;
-            border: 2px solid #ff69b4;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            font-size: 24px;
-            color: #ff1493;
-            width: 250px;
-            text-align: center;
-            border-radius: 10px;
             z-index: 2;
-            overflow: hidden;
-            white-space: nowrap;
+            transform-style: preserve-3d;
+            perspective: 200px;
+            opacity: 0;
+            background-color: #fff;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            transform: translate3d(-50%, -50%, 0) rotateY(15deg);
+            display: none;
         }
-        .note.show {
+        .card.show {
             display: block;
-            animation: fadeIn 0.5s ease-in;
+            animation: card 2s linear forwards;
         }
-        .note-text {
-            display: inline-block;
-            animation: typing 4s steps(60, end) forwards;
-            white-space: normal;
+        .title {
+            margin-bottom: 10px;
+            background-image: linear-gradient(110deg, #ff6945 0%, #8047ca 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: #ff6945;
+            font-size: 80px;
+            line-height: 1;
+            text-align: center;
+        }
+        .text {
+            margin-bottom: 20px;
+            padding-bottom: 5px;
+            color: #333;
+            font-size: 35px;
+            line-height: 1.2;
+            text-align: center;
+        }
+        .author {
+            background-image: linear-gradient(110deg, #ff6945 0%, #8047ca 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            opacity: 0;
+            color: #121212;
+            font-size: 40px;
+            text-align: right;
+            padding-right: 40px;
+            transition: opacity 1s linear;
         }
         .button {
             margin-top: 350px;
@@ -88,17 +117,14 @@
             100% { transform: rotate(-5deg); }
         }
         @keyframes float {
-            0% { transform: translate(-50%, 0); }
-            50% { transform: translate(-50%, -10px); }
-            100% { transform: translate(-50%, 0); }
+            0% { transform: translateX(-50%); }
+            50% { transform: translateX(-50%) translateY(-10px); }
+            100% { transform: translateX(-50%); }
         }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateX(-50%) scale(0.8); }
-            to { opacity: 1; transform: translateX(-50%) scale(1); }
-        }
-        @keyframes typing {
-            from { width: 0; }
-            to { width: 100%; }
+        @ FUNDament
+        @keyframes card {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
         .petals, .petals-foreground {
             position: absolute;
@@ -123,40 +149,12 @@
             height: 25px;
             opacity: 0.9;
         }
-        /* Хаотичное падение */
-        .petal.fall-1 { animation: fall1 6s linear infinite, wind1 3s ease-in-out infinite; }
-        .petal.fall-2 { animation: fall2 7s linear infinite, wind2 4s ease-in-out infinite; }
-        .petal.fall-3 { animation: fall3 5s linear infinite, wind3 2.5s ease-in-out infinite; }
-        @keyframes fall1 {
-            0% { transform: translateY(-100vh) rotate(0deg); opacity: 0.8; }
-            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
-        }
-        @keyframes fall2 {
-            0% { transform: translateY(-100vh) rotate(0deg); opacity: 0.8; }
-            100% { transform: translateY(100vh) rotate(-360deg); opacity: 0; }
-        }
-        @keyframes fall3 {
-            0% { transform: translateY(-100vh) rotate(0deg); opacity: 0.8; }
-            100% { transform: translateY(100vh) rotate(180deg); opacity: 0; }
-        }
-        @keyframes wind1 {
-            0% { transform: translateX(0); }
-            50% { transform: translateX(80px); }
-            100% { transform: translateX(0); }
-        }
-        @keyframes wind2 {
-            0% { transform: translateX(0); }
-            50% { transform: translateX(-60px); }
-            100% { transform: translateX(0); }
-        }
-        @keyframes wind3 {
-            0% { transform: translateX(0); }
-            50% { transform: translateX(100px); }
-            100% { transform: translateX(0); }
-        }
         @media (max-width: 600px) {
             .teddy-bear, .envelope { width: 120px; }
-            .note { width: 200px; font-size: 20px; }
+            .card { max-width: 90%; min-height: 300px; padding: 10px 20px; }
+            .title { font-size: 50px; }
+            .text { font-size: 25px; }
+            .author { font-size: 30px; padding-right: 20px; }
             .petal { width: 20px; height: 20px; }
             .petal.foreground { width: 15px; height: 15px; }
             .button { margin-top: 300px; }
@@ -167,8 +165,10 @@
     <div class="container">
         <img src="https://img.icons8.com/fluency/96/000000/teddy-bear.png" alt="Teddy Bear" class="teddy-bear">
         <img src="https://img.icons8.com/color/96/000000/love-letter.png" alt="Envelope" class="envelope" id="envelope">
-        <div class="note" id="note">
-            <span class="note-text">Моя любимая, с этим нежным весенним днём! Ты — моё солнышко, что согревает каждый мой день. Желаю тебе море улыбок, тепла и счастья. Пусть твои глаза всегда сияют, а я обещаю быть рядом, любить и беречь тебя. Прости, если порой был не прав — ты моё всё! ❤️</span>
+        <div class="card" id="card">
+            <div class="title">Любимая моя Фарзона!</div>
+            <div class="text" id="text"></div>
+            <div class="author" id="author">- от твоего принца Тень</div>
         </div>
         <button class="button" onclick="toggleEnvelope()">Открыть конверт</button>
         <div class="petals" id="petals"></div>
@@ -176,34 +176,93 @@
     </div>
     <audio id="windSound" src="https://freesound.org/data/previews/184/184438_2394235-lq.mp3" preload="auto" loop></audio>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
     <script>
-        // Запуск звука ветра при загрузке
+        // Запуск звука ветра
         window.onload = function() {
             document.getElementById('windSound').play().catch(e => console.log("Audio blocked:", e));
         };
 
+        // Переключение конверта и карточки
         let isOpen = false;
         function toggleEnvelope() {
             const envelope = document.getElementById('envelope');
-            const note = document.getElementById('note');
+            const card = document.getElementById('card');
+            const textElement = document.getElementById('text');
+            const author = document.getElementById('author');
             if (!isOpen) {
                 envelope.classList.add('open');
-                note.classList.add('show');
+                card.classList.add('show');
                 document.querySelector('.button').textContent = 'Закрыть конверт';
+                // Запуск анимации текста
+                new Typed('#text', {
+                    strings: ['Моя любимая, с этим нежным весенним днём! Ты — моё солнышко, что согревает каждый мой день. Ж任命
+                    Желаю тебе море улыбок, тепла и счастья. Пусть твои глаза всегда сияют, а я обещаю быть рядом, любить и беречь тебя. Прости, если порой был не прав — ты моё всё! ❤️'],
+                    startDelay: 1000,
+                    typeSpeed: 50,
+                    backSpeed: 0,
+                    fadeOut: true,
+                    loop: false,
+                    showCursor: false,
+                    onComplete: function() {
+                        author.style.opacity = 1;
+                    }
+                });
                 isOpen = true;
             } else {
                 envelope.classList.remove('open');
-                note.classList.remove('show');
+                card.classList.remove('show');
                 document.querySelector('.button').textContent = 'Открыть конверт';
+                // Сброс текста и автора для повторной анимации
+                textElement.innerHTML = '';
+                author.style.opacity = 0;
                 isOpen = false;
             }
         }
 
-        // Список SVG-лепестков (замените URL на свои SVG-файлы)
+        // GSAP для лепестков
+        gsap.set(".petals, .petals-foreground", { perspective: 600 });
+        gsap.set(".petal", { xPercent: "-50%", yPercent: "-50%" });
+
+        const total = 50;
+        const w = window.innerWidth;
+        const h = window.innerHeight;
+
+        function animm(elm) {
+            gsap.to(elm, {
+                y: h + 100,
+                ease: "none",
+                repeat: -1,
+                duration: R(6, 15),
+                delay: -15
+            });
+            gsap.to(elm, {
+                x: "+=100",
+                rotationZ: R(0, 180),
+                repeat: -1,
+                yoyo: true,
+                ease: "sine.inOut",
+                duration: R(4, 8)
+            });
+            gsap.to(elm, {
+                rotationX: R(0, 360),
+                rotationY: R(0, 360),
+                repeat: -1,
+                yoyo: true,
+                ease: "sine.inOut",
+                duration: R(2, 8),
+                delay: -5
+            });
+        }
+
+        function R(min, max) { return min + Math.random() * (max - min); }
+
+        // Список SVG-лепестков (замените на свои SVG)
         const petalImages = [
-            'url("https://raw.githubusercontent.com/codermasochist/March8/refs/heads/main/img/petal.png")', // Пример SVG 1
-            'url("https://raw.githubusercontent.com/codermasochist/March8/refs/heads/main/img/petal.png")', // Пример SVG 2
-            'url("https://raw.githubusercontent.com/codermasochist/March8/refs/heads/main/img/petal.png")' // Пример SVG 3
+            'url("https://raw.githubusercontent.com/codermasochist/March8/refs/heads/main/img/petal.png")',
+            'url("https://raw.githubusercontent.com/codermasochist/March8/refs/heads/main/img/petal.png")',
+            'url("https://raw.githubusercontent.com/codermasochist/March8/refs/heads/main/img/petal.png")'
         ];
 
         // Создание лепестков
@@ -211,23 +270,18 @@
             const petal = document.createElement('div');
             petal.classList.add('petal');
             if (foreground) petal.classList.add('foreground');
-            // Случайный выбор анимации падения
-            const fallType = Math.floor(Math.random() * 3) + 1;
-            petal.classList.add(`fall-${fallType}`);
-            petal.style.left = Math.random() * 100 + 'vw';
-            petal.style.animationDuration = Math.random() * 3 + 4 + 's';
-            petal.style.animationDelay = Math.random() * 5 + 's';
+            petal.style.left = R(0, w) + 'px';
             petal.style.backgroundImage = petalImages[Math.floor(Math.random() * petalImages.length)];
-            petal.style.transform = `translateX(${Math.random() * 100 - 50}px)`;
             const container = foreground ? document.getElementById('petals-foreground') : document.getElementById('petals');
             container.appendChild(petal);
-            setTimeout(() => petal.remove(), 7000);
+            animm(petal);
+            setTimeout(() => petal.remove(), 15000);
         }
 
-        // Создаём лепестки: 70% на заднем плане, 30% на переднем
-        setInterval(() => {
+        // Создаём лепестки
+        for (let i = 0; i < total; i++) {
             createPetal(Math.random() < 0.3);
-        }, 300);
+        }
     </script>
 </body>
 </html>
