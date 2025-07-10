@@ -116,7 +116,6 @@
             height: 30px;
             background-size: contain;
             background-repeat: no-repeat;
-            animation: fall 6s linear infinite, wind 3s ease-in-out infinite;
             opacity: 0.8;
         }
         .petal.foreground {
@@ -124,13 +123,35 @@
             height: 25px;
             opacity: 0.9;
         }
-        @keyframes fall {
+        /* Хаотичное падение */
+        .petal.fall-1 { animation: fall1 6s linear infinite, wind1 3s ease-in-out infinite; }
+        .petal.fall-2 { animation: fall2 7s linear infinite, wind2 4s ease-in-out infinite; }
+        .petal.fall-3 { animation: fall3 5s linear infinite, wind3 2.5s ease-in-out infinite; }
+        @keyframes fall1 {
             0% { transform: translateY(-100vh) rotate(0deg); opacity: 0.8; }
             100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
         }
-        @keyframes wind {
+        @keyframes fall2 {
+            0% { transform: translateY(-100vh) rotate(0deg); opacity: 0.8; }
+            100% { transform: translateY(100vh) rotate(-360deg); opacity: 0; }
+        }
+        @keyframes fall3 {
+            0% { transform: translateY(-100vh) rotate(0deg); opacity: 0.8; }
+            100% { transform: translateY(100vh) rotate(180deg); opacity: 0; }
+        }
+        @keyframes wind1 {
             0% { transform: translateX(0); }
             50% { transform: translateX(80px); }
+            100% { transform: translateX(0); }
+        }
+        @keyframes wind2 {
+            0% { transform: translateX(0); }
+            50% { transform: translateX(-60px); }
+            100% { transform: translateX(0); }
+        }
+        @keyframes wind3 {
+            0% { transform: translateX(0); }
+            50% { transform: translateX(100px); }
             100% { transform: translateX(0); }
         }
         @media (max-width: 600px) {
@@ -190,12 +211,14 @@
             const petal = document.createElement('div');
             petal.classList.add('petal');
             if (foreground) petal.classList.add('foreground');
+            // Случайный выбор анимации падения
+            const fallType = Math.floor(Math.random() * 3) + 1;
+            petal.classList.add(`fall-${fallType}`);
             petal.style.left = Math.random() * 100 + 'vw';
             petal.style.animationDuration = Math.random() * 3 + 4 + 's';
             petal.style.animationDelay = Math.random() * 5 + 's';
             petal.style.backgroundImage = petalImages[Math.floor(Math.random() * petalImages.length)];
             petal.style.transform = `translateX(${Math.random() * 100 - 50}px)`;
-            petal.style.animation = `fall ${Math.random() * 3 + 4}s linear infinite, wind ${Math.random() * 2 + 2}s ease-in-out infinite`;
             const container = foreground ? document.getElementById('petals-foreground') : document.getElementById('petals');
             container.appendChild(petal);
             setTimeout(() => petal.remove(), 7000);
